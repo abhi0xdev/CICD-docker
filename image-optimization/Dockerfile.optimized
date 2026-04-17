@@ -1,0 +1,32 @@
+# stage 1: Builder
+
+FROM python:3.10-slim AS builder
+
+WORKDIR /app
+
+# Install only build deps temp
+
+RUN apt-get update && apt-get install -y build-essential gcc && rm -rf /var/lib/apt/lists/*
+
+COPY requirements.txt .
+
+RUN pip install --user --no-cache-dir -r requirements.txt
+
+COPY . .
+
+# Stage 2: Runner
+
+FROM python:3.10-slim
+
+WORKDIR /app
+
+# copy only what's needed
+
+COPY --from=builder /root/.local /root/.local
+COPY --from=builder /app /app
+
+ENV PATH=/root/.local/bin:$PATH
+
+EXPOSE 5000
+
+CMD ["Python", "app.py"]
