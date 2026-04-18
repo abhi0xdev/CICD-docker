@@ -19,4 +19,4 @@ Bind mounts are powerful but dangerous if u mount the wrong path
 
 ---
 
-now we will deal with very different failure: a container that refuses to stay alive. You'll see how to debug a container stuckin CraskLoop using docker logs and docker exec
+now we will deal with very different failure: a container that refuses to stay alive. You'll see how to debug a container stuckin CrashLoop using docker logs and docker exec
